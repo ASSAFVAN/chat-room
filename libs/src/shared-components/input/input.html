@@ -1,0 +1,18 @@
+<div class="input-wrapper" [ngClass]="wrapperClass" [ngStyle]="{'font-size': fontSize}">
+
+  <input
+    type="text"
+    [placeholder]="placeholder"
+    [formControl]="control"
+    (keydown)="onKeyDown($event)"
+    autofocus="autofocus"
+    [ngClass]="cssClass"
+  />
+
+  @if (showClear && control.value) {
+    <span class="icon-clear" (click)="clearValue()">
+      <i class="material-icons">{{ clearIcon }}</i>
+    </span>
+  }
+
+</div>

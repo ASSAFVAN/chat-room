@@ -1,0 +1,13 @@
+<div class="message-list" #messageList>
+  @for (message of messages; track message.text) {
+  <div class="message"
+    [ngClass]="{'bot-message': message.isBot, 'user-message': !message.isBot}"
+  >
+    <!-- <strong></strong> {{message.text}} -->
+    <div class="message-text">
+      {{ message.text }}
+    </div>
+    <!-- <small class="date">{{message.date | date:'shortTime'}}</small> -->
+  </div>
+  }
+</div>

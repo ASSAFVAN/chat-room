@@ -1,0 +1,25 @@
+<div class="chat-room">
+  <section class="image-wrapper">
+    <img src="angular_icon_gradient.gif" alt="">
+    <p class="statement">What do you want to know <br> about Angular?</p>
+  </section>
+  <app-message-list [messages]="messages"></app-message-list>
+  <form
+    [formGroup]="form"
+    (submit)="sendMessage(); $event.preventDefault()"
+    class="input-form"
+  >
+    <app-input
+      [control]="messageControl"
+      placeholder="Ask me anything..."
+      (submit)="sendMessage()"
+      [showClear]="true"
+      [clearIcon]="'&times;'"
+      [fontSize]="'20px'"
+      [autofocus]="true"
+      [cssClass]="'input-style'"
+      [wrapperClass]="'wrapper-style'"
+    >
+    </app-input>
+  </form>
+</div>

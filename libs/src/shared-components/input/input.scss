@@ -1,0 +1,51 @@
+.input-wrapper {
+  position: relative;
+  display: flex;
+  align-items: center;
+  border: 1px solid #ccc;
+  border-radius: 6px;
+  padding: 4px 8px;
+
+  input {
+    flex: 1;
+    border: none;
+    outline: none;
+    background: transparent;
+    font-size: inherit;
+    padding-left: 10px;
+    &::placeholder {
+      color: rgb(183, 182, 182);
+    }
+  }
+
+  .icon-left {
+    margin-right: 6px;
+    cursor: pointer;
+    color: #555;
+  }
+
+  .icon-clear {
+    margin-left: 6px;
+    cursor: pointer;
+    color: #888;
+
+    &:hover {
+      color: #333;
+    }
+  }
+}
+
+div.input-wrapper input.input-style {
+  background-color: white;
+  padding-right: 0;
+  padding-top: 0;
+  height: 3rem;
+  border-top-left-radius: 1rem;
+  border-top-right-radius: 1rem;
+  box-shadow: 0 2px 3px rgba(0, 0, 0, 0.1);
+}
+
+div.input-wrapper.wrapper-style {
+  padding: 0;
+  border: none;
+}

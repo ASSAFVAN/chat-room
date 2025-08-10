@@ -1,0 +1,33 @@
+{
+  "component": [
+    "A component is a central building block in Angular that contains logic and a view.",
+    "To build a component, the @Component decorator is used."
+  ],
+  "directive": [
+    "A directive changes the behavior or appearance of elements on the page.",
+    "It is easy to create a custom directive."
+  ],
+  "rxjs": [
+    "RxJS is a library for working with data streams reactively.",
+    "Observables are a core tool in RxJS."
+  ],
+  "react": [
+    "Nothing beats Angular! 😉",
+    "We don't build apps with React here!",
+    "React? Try Angular, it's a whole different story!",
+    "I'm specialized in Angular, React doesn't appeal to me 😄"
+  ],
+  "generic": [
+    "Sorry, I don't understand the question. Could you please rephrase?",
+    "I'm still learning... try asking a different question.",
+    "I couldn't find an answer to that, but I'm here to help!",
+    "Good question! I recommend checking Angular's documentation."
+  ],
+  "funnyComments": [
+    "Ah, that's an important topic!",
+    "Alright, let's do this!",
+    "The bot is here for you 🤖",
+    "Keep asking, I'm listening!",
+    "Hold on, I'm loading my brain..."
+  ]
+}
