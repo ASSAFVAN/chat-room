@@ -1,11 +1,7 @@
 import { inject, Injectable } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
 import { BehaviorSubject, Observable } from 'rxjs';
-import { Message } from '../models/message';
-
-interface AnswersMap {
-  [keyword: string]: string[];
-}
+import { Message, AnswersMap, AnswerTypeKey } from '../models/message';
 
 @Injectable({
   providedIn: 'root',
@@ -13,11 +9,27 @@ interface AnswersMap {
 export class ChatService {
   private answersMap: AnswersMap = {};
   private messages$ = new BehaviorSubject<Message[]>([]);
-  private angularKeywords = ['component', 'directive', 'rxjs', 'react'];
+
+  angularKeywords = [
+    'angular',
+    'rxjs',
+    'subjects',
+    'service',
+    'components',
+    'pipes',
+    'directives',
+    'forms',
+    'animations',
+    'testing',
+    'routing',
+    'react',
+  ];
+
   private genericAnswers: string[] = [];
   private funnyComments: string[] = [];
 
   http = inject(HttpClient);
+
   constructor() {
     this.loadAnswers();
   }
@@ -25,8 +37,8 @@ export class ChatService {
   private loadAnswers(): void {
     this.http.get<AnswersMap>('bot-answers.json').subscribe((data) => {
       this.answersMap = data;
-      this.genericAnswers = data['generic'] || [];
-      this.funnyComments = data['funnyComments'] || [];
+      this.genericAnswers = data['generic']?.general || [];
+      this.funnyComments = data['funnyComments']?.general || [];
     });
   }
 
@@ -40,56 +52,89 @@ export class ChatService {
 
     if (!message.isBot) {
       setTimeout(() => {
-        //   const botResponse = this.getBotAnswer(message.text);
-        //   if (botResponse) {
-        //     this.addBotMessageTypingEffect(botResponse);
-        //   }
         this.addBotResponseWithFunnyComment(message.text);
       }, 1000);
     }
   }
 
-  private addBotMessageTypingEffect(fullText: string): void {
-    const typingMessage: Message = {
-      sender: '🤖 AngularBot',
-      text: '',
-      date: new Date(),
-      isBot: true,
-    };
+  private analyzeQuestion(question: string): { type: AnswerTypeKey; keyword: string | null } {
+    const lower = question.toLowerCase();
 
-    this.addMessage(typingMessage);
+    const definitionPatterns = [
+      /^what is/,
+      /^define/,
+      /^explain/,
+      /^what does .* mean/,
+    ];
+    const usagePatterns = [
+      /^how to/,
+      /^how do i/,
+      /^how can i/,
+      /^usage of/,
+      /^how does/,
+    ];
 
-    let currentIndex = 0;
-    const interval = setInterval(() => {
-      currentIndex++;
-      typingMessage.text = fullText.slice(0, currentIndex);
-      const messages = this.messages$.value;
-      this.messages$.next([...messages]);
+    let type: AnswerTypeKey = 'general';
 
-      if (currentIndex === fullText.length) {
-        clearInterval(interval);
+    if (definitionPatterns.some((pat) => pat.test(lower))) {
+      type = 'definition';
+    } else if (usagePatterns.some((pat) => pat.test(lower))) {
+      type = 'usage';
+    }
+
+    const keyword = this.angularKeywords.find((k) => lower.includes(k)) || null;
+
+    return { type, keyword };
+  }
+
+  private getBotAnswer(userMessage: string): string {
+    const { type: questionType, keyword } = this.analyzeQuestion(userMessage);
+
+    if (keyword) {
+      const answerObj = this.answersMap[keyword];
+      if (answerObj && questionType && answerObj[questionType]?.length) {
+        const answers = answerObj[questionType]!;
+        const randomIndex = Math.floor(Math.random() * answers.length);
+        return answers[randomIndex];
       }
-    }, 50);
+    }
+
+    // fallback to generic answers
+    if (this.genericAnswers.length > 0) {
+      const randomGenericIndex = Math.floor(Math.random() * this.genericAnswers.length);
+      return this.genericAnswers[randomGenericIndex];
+    }
+
+    return "Sorry, I don't have an answer for that. Can you ask something else?";
   }
 
   private addBotResponseWithFunnyComment(userMessage: string): void {
     const answer = this.getBotAnswer(userMessage);
-    let fullAnswer = answer;
 
-    if (this.funnyComments.length > 0) {
+    const isGenericAnswer = this.genericAnswers.includes(answer);
+
+    if (!isGenericAnswer && this.funnyComments.length > 0) {
       const randomIndex = Math.floor(Math.random() * this.funnyComments.length);
       const funnyComment = this.funnyComments[randomIndex];
-      fullAnswer = `${funnyComment}\n\n${answer}`;
 
       const funnyMessage: Message = {
-      sender: '🤖 AngularBot',
-      text: funnyComment,
-      date: new Date(),
-      isBot: true,
-    };
-    this.addMessage(funnyMessage)
+        sender: '🤖 AngularBot',
+        text: funnyComment,
+        date: new Date(),
+        isBot: true,
+      };
+      this.addMessage(funnyMessage);
 
-    setTimeout(() => {
+      setTimeout(() => {
+        const botMessage: Message = {
+          sender: '🤖 AngularBot',
+          text: answer,
+          date: new Date(),
+          isBot: true,
+        };
+        this.addMessage(botMessage);
+      }, 1000);
+    } else {
       const botMessage: Message = {
         sender: '🤖 AngularBot',
         text: answer,
@@ -97,43 +142,6 @@ export class ChatService {
         isBot: true,
       };
       this.addMessage(botMessage);
-    }, 1000);
-
     }
-
-    // const botMessage: Message = {
-    //     sender: '🤖 AngularBot',
-    //     text: fullAnswer,
-    //     date: new Date(),
-    //     isBot: true,
-    // };
-
-    // this.addMessage(botMessage);
-
-    
-
-    // this.addBotMessageTypingEffect(fullAnswer);
-  }
-
-  private getBotAnswer(userMessage: string): string {
-    const lower = userMessage.toLowerCase();
-    const keyword = this.angularKeywords.find((k) => lower.includes(k));
-
-    if (keyword) {
-      const answers = this.answersMap[keyword];
-      if (answers && answers.length) {
-        const randomIndex = Math.floor(Math.random() * answers.length);
-        return answers[randomIndex];
-      }
-    }
-
-    if (this.genericAnswers.length > 0) {
-      const randomGenericIndex = Math.floor(
-        Math.random() * this.genericAnswers.length
-      );
-      return this.genericAnswers[randomGenericIndex];
-    }
-
-    return 'Sorry, I don\'t have an answer for that. Can you ask something else?';
   }
 }

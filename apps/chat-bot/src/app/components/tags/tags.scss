@@ -9,6 +9,15 @@
     display: flex;
     justify-content: space-around;
 
+    .topics {
+        display: flex;
+        align-items: center;
+        color: gray;
+        .star {
+            color: rgb(249, 7, 204);
+        }
+    }
+
     .tag {
         display: flex;
     }

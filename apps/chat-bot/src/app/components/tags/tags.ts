@@ -18,6 +18,15 @@ export class TagsComponent implements OnInit {
   displayedTags: string[] = [];
 
   ngOnInit() {
+    this.setMaxTags();
+    window.addEventListener('resize', () => {
+    this.setMaxTags();
+  });
     this.displayedTags = shuffleArray(this.tags).slice(0, this.maxTags);
+  }
+
+  private setMaxTags(): void {
+    const isMobile = window.innerWidth <= 450;
+    this.maxTags = isMobile ? 3 : 5;
   }
 }

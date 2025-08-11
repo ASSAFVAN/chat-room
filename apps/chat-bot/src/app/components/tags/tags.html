@@ -1,11 +1,12 @@
 <div class="tags">
+  <div class="topics"><span class="star">&#x2605;</span>&nbsp;Topics</div>
   @for (tag of displayedTags; track tag) {
-    <app-tag
-        [text]="tag"
-        (clicked)="tagSelected.emit($event)"
-        [backgroundColor]="'#d3067a'"
-        [hoveringColor]="'#f72096'"
-        class="tag"
-    ></app-tag>
+  <app-tag
+    [text]="tag"
+    (clicked)="tagSelected.emit($event)"
+    [backgroundColor]="'#d3067a'"
+    [hoveringColor]="'#f72096'"
+    class="tag"
+  ></app-tag>
   }
 </div>
