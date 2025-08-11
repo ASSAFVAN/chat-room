@@ -1,0 +1,15 @@
+
+.tag {
+  display: inline-block;
+  background-color: var(--bg-color, darkblue);
+  color: white;
+  padding: 0.2rem 0.5rem;
+  border-radius: 0.5rem;
+  margin-right: 0.5rem;
+  border: none;
+  cursor: pointer;
+
+&:hover {
+    background-color: var(--hover-color, blue);
+  }
+}

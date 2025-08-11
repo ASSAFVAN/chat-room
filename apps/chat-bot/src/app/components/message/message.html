@@ -1,0 +1,6 @@
+<div
+  class="message"
+  [ngClass]="{'bot-message': message.isBot, 'user-message': !message.isBot}"
+>
+  <div class="message-text">{{ message.text }}</div>
+</div>

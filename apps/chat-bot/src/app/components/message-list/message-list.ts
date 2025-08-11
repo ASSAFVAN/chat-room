@@ -1,10 +1,11 @@
 import { Component, ElementRef, Input, ViewChild } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { Message } from '../../models/message';
+import { MessageComponent } from '../message/message';
 
 @Component({
   selector: 'app-message-list',
-  imports: [CommonModule],
+  imports: [CommonModule, MessageComponent],
   templateUrl: './message-list.html',
   styleUrl: './message-list.scss',
 })

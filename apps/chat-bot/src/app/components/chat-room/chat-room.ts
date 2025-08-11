@@ -10,6 +10,8 @@ import {
 } from '@angular/forms';
 import { MessageList } from '../message-list/message-list';
 import { InputComponent } from '@shared-components/input/input';
+import { shuffleArray} from '@utils/utils';
+import { TagsComponent } from '../tags/tags';
 
 @Component({
   selector: 'app-chat-room',
@@ -19,12 +21,14 @@ import { InputComponent } from '@shared-components/input/input';
     MessageList,
     InputComponent,
     ReactiveFormsModule,
+    TagsComponent
   ],
   templateUrl: './chat-room.html',
   styleUrl: './chat-room.scss',
 })
 export class ChatRoom implements OnInit {
   messages: Message[] = [];
+  tags: string[] = ['Angular', 'rxjs', 'subjects', 'service', 'components', 'pipes', 'directives', 'forms', 'animations', 'testing', 'routing'];
   @ViewChild(MessageList) messageListComponent!: MessageList;
   form = new FormGroup({
     messageControl: new FormControl(''),
@@ -37,6 +41,8 @@ export class ChatRoom implements OnInit {
   chatService = inject(ChatService);
 
   ngOnInit(): void {
+    this.tags = shuffleArray(this.tags).slice(0, 5);
+
     this.chatService.getMessages().subscribe((msgs) => {
       this.messages = msgs;
       setTimeout(() => {
@@ -58,4 +64,13 @@ export class ChatRoom implements OnInit {
     this.chatService.addMessage(message);
     this.messageControl.setValue('');
   }
+
+  onTagClick(tag: string): void {
+  const message: Message = {
+    sender: 'You',
+    text: tag[0].toUpperCase() + tag.slice(1),
+    date: new Date(),
+  };
+  this.chatService.addMessage(message);
+}
 }

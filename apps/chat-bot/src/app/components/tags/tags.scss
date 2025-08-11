@@ -1,0 +1,15 @@
+.tags {
+    width: 100%;
+    background-color: #ecefec;
+    height: 3rem;
+    box-shadow: 0 2px 3px rgba(0, 0, 0, 0.1);
+    border-bottom-left-radius: 1rem;
+    border-bottom-right-radius: 1rem;
+    padding: 8px;
+    display: flex;
+    justify-content: space-around;
+
+    .tag {
+        display: flex;
+    }
+}

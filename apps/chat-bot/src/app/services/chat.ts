@@ -49,7 +49,7 @@ export class ChatService {
     }
   }
 
-  addBotMessageTypingEffect(fullText: string): void {
+  private addBotMessageTypingEffect(fullText: string): void {
     const typingMessage: Message = {
       sender: '🤖 AngularBot',
       text: '',
@@ -79,17 +79,38 @@ export class ChatService {
     if (this.funnyComments.length > 0) {
       const randomIndex = Math.floor(Math.random() * this.funnyComments.length);
       const funnyComment = this.funnyComments[randomIndex];
-      fullAnswer = `${answer}\n\n${funnyComment}`;
-    }
+      fullAnswer = `${funnyComment}\n\n${answer}`;
 
-    const botMessage: Message = {
+      const funnyMessage: Message = {
+      sender: '🤖 AngularBot',
+      text: funnyComment,
+      date: new Date(),
+      isBot: true,
+    };
+    this.addMessage(funnyMessage)
+
+    setTimeout(() => {
+      const botMessage: Message = {
         sender: '🤖 AngularBot',
-        text: fullAnswer,
+        text: answer,
         date: new Date(),
         isBot: true,
-    };
+      };
+      this.addMessage(botMessage);
+    }, 1000);
 
-    this.addMessage(botMessage);
+    }
+
+    // const botMessage: Message = {
+    //     sender: '🤖 AngularBot',
+    //     text: fullAnswer,
+    //     date: new Date(),
+    //     isBot: true,
+    // };
+
+    // this.addMessage(botMessage);
+
+    
 
     // this.addBotMessageTypingEffect(fullAnswer);
   }
@@ -113,6 +134,6 @@ export class ChatService {
       return this.genericAnswers[randomGenericIndex];
     }
 
-    return 'מצטער, לא מצאתי תשובה מתאימה.';
+    return 'Sorry, I don\'t have an answer for that. Can you ask something else?';
   }
 }
