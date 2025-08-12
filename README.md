@@ -2,8 +2,10 @@
 
 ## Introduction
 
-This application is a chat room where users can ask questions on various Angular-related topics. The chatbot acts as a senior Angular developer, providing expert answers and explanations. It is designed to simulate a helpful, knowledgeable, and sometimes playful conversation partner for Angular developers of all levels.
-A demo of the application can be found on this link:
+This application is a chat room where users can ask questions on various Angular-related topics. The chatbot acts as a senior Angular developer, providing expert answers and explanations. It is designed to simulate a helpful, knowledgeable, and sometimes playful conversation partner for Angular developers of all levels.  
+
+A demo of the application can be found on this link:  
+
 https://chat-room-beta-nine.vercel.app/
 
 ## Architecture
@@ -15,7 +17,14 @@ The repository includes a `libs` folder containing:
 - **shared-components**: A collection of reusable generic Angular components that can be used across all applications.
 - **utils**: Utility functions and helpers shared by any app in the monorepo.
 
-## Components Overview
+## Technologies Used
+
+- Angular version 20
+- Nx Monorepo
+- SCSS for styling
+- RxJS for reactive programming
+
+## Components Overview (Standalone Components)
 
 ### Chat-room (Parent Component)
 - Manages the overall chat interface.
