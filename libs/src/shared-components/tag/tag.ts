@@ -1,5 +1,6 @@
 import { CommonModule } from '@angular/common';
 import {
+    ChangeDetectionStrategy,
   Component,
   EventEmitter,
   HostBinding,
@@ -13,6 +14,7 @@ import {
   styleUrls: ['./tag.scss'],
   standalone: true,
   imports: [CommonModule],
+  changeDetection: ChangeDetectionStrategy.OnPush,
 })
 export class TagComponent {
   @Input() text = '';
@@ -26,8 +28,8 @@ export class TagComponent {
     return this.backgroundColor;
   }
   @HostBinding('style.--hover-color') get hoverColor() {
-  return this.hoveringColor;
-}
+    return this.hoveringColor;
+  }
 
   onClick(): void {
     this.clicked.emit(this.text);

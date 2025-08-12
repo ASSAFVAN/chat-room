@@ -1,22 +1,282 @@
 {
-  "rxjs": {
+  "angular": {
     "definition": [
-      "RxJS is a library for reactive programming using Observables to make it easier to compose asynchronous or callback-based code."
+      "Angular is a platform and framework for building client-side single-page applications using HTML and TypeScript. 🚀",
+      "It provides a complete solution including templating, routing, forms, and HTTP client.",
+      "Angular uses TypeScript for improved tooling and maintainability.",
+      "It implements dependency injection to manage service lifetimes and dependencies."
     ],
     "usage": [
-      "It’s fundamental in Angular for handling asynchronous data streams, change detection, and event handling."
+      "It enables developers to create scalable web apps with components, dependency injection, and a powerful CLI.",
+      "Angular CLI automates project setup, builds, and testing workflows.",
+      "Developers use Angular to build cross-platform apps, including web, mobile, and desktop.",
+      "It integrates well with RxJS for reactive programming and state management."
     ],
     "general": [
-      "RxJS allows composing async or event-based programs using observable sequences."
+      "Angular follows a component-based architecture and leverages RxJS for reactive programming.",
+      "It encourages modular code structure for easier maintenance and testing.",
+      "Angular supports Ahead-of-Time (AOT) compilation to boost app startup performance.",
+      "The framework supports internationalization (i18n) for multi-language apps."
+    ]
+  },
+  "rxjs": {
+    "definition": [
+      "RxJS is a library for reactive programming using Observables to handle async data streams. ⚡️",
+      "It provides operators to transform, filter, and combine asynchronous events.",
+      "RxJS enables declarative event handling with composable and cancellable streams.",
+      "It forms the backbone of reactive patterns in Angular and many other frameworks."
+    ],
+    "usage": [
+      "It’s used in Angular to manage events, HTTP requests, and state changes reactively.",
+      "RxJS Observables allow subscribing to asynchronous data like user inputs or WebSocket streams.",
+      "It simplifies handling complex asynchronous workflows such as retries and error handling.",
+      "Developers use RxJS for state management patterns, like with NgRx or custom solutions."
+    ],
+    "general": [
+      "RxJS allows composing async or event-based programs using observable sequences.",
+      "It supports both cold and hot observables for flexible event emission.",
+      "RxJS has a rich ecosystem of operators to handle time-based, conditional, and combinatorial logic.",
+      "Learning RxJS greatly enhances ability to manage asynchronous JavaScript effectively."
     ]
   },
   "subjects": {
     "definition": [
-      "Subjects are special types of Observables in RxJS that allow multicasting to multiple observers and act as both Observable and Observer."
+      "Subjects are special Observables that can multicast to many observers and act as both Observable and Observer. 📡",
+      "They bridge the gap between imperative event emitters and declarative Observables.",
+      "Subjects can be used to manually push values into reactive streams.",
+      "There are different types of Subjects like BehaviorSubject, ReplaySubject, and AsyncSubject with varied behaviors."
     ],
-    "usage": ["They enable state sharing and event buses in Angular apps."],
+    "usage": [
+      "They enable event broadcasting and shared state in Angular applications.",
+      "Subjects help implement cross-component communication without tight coupling.",
+      "BehaviorSubjects hold and emit the last value to new subscribers, useful for state sharing.",
+      "ReplaySubjects can replay a set number of previous emissions to new subscribers."
+    ],
     "general": [
-      "Subjects provide a way to multicast values to multiple subscribers."
+      "Subjects are a core part of reactive patterns in Angular apps.",
+      "They provide a powerful abstraction for both event handling and state management.",
+      "Careful use of Subjects is important to avoid memory leaks and unintended behaviors.",
+      "Subjects can be used to implement custom reactive data sources."
+    ]
+  },
+  "service": {
+    "definition": [
+      "Services encapsulate reusable business logic and data access in Angular. 🔧",
+      "They are typically singleton classes provided via dependency injection.",
+      "Services can manage state, communicate with backend APIs, and perform utility functions.",
+      "They help isolate side effects from UI components."
+    ],
+    "usage": [
+      "They are typically injected into components using Angular's Dependency Injection system.",
+      "Services enable sharing data and logic across multiple components.",
+      "They are often used to abstract HTTP calls and handle caching or retries.",
+      "Services improve testability by allowing mocks and spies in unit tests."
+    ],
+    "general": [
+      "Services promote separation of concerns and help keep components lean.",
+      "Using services makes Angular apps more modular and maintainable.",
+      "Services support lifecycle hooks via Angular's DI system for cleanup or initialization.",
+      "They facilitate adhering to SOLID design principles in Angular apps."
+    ]
+  },
+  "components": {
+    "definition": [
+      "Components are the fundamental building blocks of Angular UI, each with its template, styles, and logic. 🧱",
+      "They encapsulate view and behavior for a part of the user interface.",
+      "Components define selectors used to embed them in templates.",
+      "They implement lifecycle hooks to react to changes and initialization."
+    ],
+    "usage": [
+      "They handle user interaction and bind data to templates.",
+      "Components communicate with parents and children via Inputs and Outputs.",
+      "They use Angular's change detection to update views efficiently.",
+      "Components can be nested to create complex UI hierarchies."
+    ],
+    "general": [
+      "Angular apps are a tree of nested components communicating via inputs and outputs.",
+      "Components promote reuse by encapsulating UI logic and presentation.",
+      "They support styling encapsulation with ViewEncapsulation options.",
+      "Components can be lazy-loaded to improve app startup performance."
+    ]
+  },
+  "pipes": {
+    "definition": [
+      "Pipes transform displayed data in templates, allowing formatting and filtering without changing underlying models. 🔄",
+      "They are pure or impure functions that format input for presentation.",
+      "Custom pipes can be created to implement app-specific transformations.",
+      "Angular provides built-in pipes like date, currency, and json."
+    ],
+    "usage": [
+      "Common pipes include date, currency, and async pipe for Observables.",
+      "Async pipe automatically subscribes and unsubscribes from Observables in templates.",
+      "Pipes can be chained to apply multiple transformations sequentially.",
+      "They help keep templates clean by abstracting formatting logic."
+    ],
+    "general": [
+      "Pipes improve template readability and performance by controlling change detection.",
+      "Using pure pipes avoids unnecessary recalculations during change detection cycles.",
+      "Impure pipes are useful for transforming mutable or dynamic data.",
+      "Pipes can also be used in component code via the `PipeTransform` interface."
+    ]
+  },
+  "directives": {
+    "definition": [
+      "Directives are classes that add behavior to elements in your Angular templates. ✨",
+      "There are three kinds: components, attribute directives, and structural directives.",
+      "They manipulate the DOM or element properties dynamically.",
+      "Directives use decorators like @Directive and selectors to apply behavior."
+    ],
+    "usage": [
+      "Structural directives like *ngIf and *ngFor alter the DOM layout dynamically.",
+      "Attribute directives change element appearance or behavior without modifying the DOM structure.",
+      "Custom directives can add event listeners or manipulate styles dynamically.",
+      "Directives enable powerful template abstractions and reusable behaviors."
+    ],
+    "general": [
+      "Attribute directives change element appearance or behavior without modifying the DOM structure.",
+      "Structural directives add, remove, or reshape elements in the DOM.",
+      "Directives can inject dependencies and interact with host elements.",
+      "They are essential for creating reusable UI behaviors and logic."
+    ]
+  },
+  "forms": {
+    "definition": [
+      "Angular Forms provide template-driven and reactive ways to handle user input and validation. 📝",
+      "Template-driven forms rely on directives and two-way binding for simple forms.",
+      "Reactive forms use explicit form models to handle complex validation and dynamic controls.",
+      "Both approaches support custom validators and async validation."
+    ],
+    "usage": [
+      "Reactive Forms offer immutable, observable-based form models for advanced control.",
+      "Forms can track touched, dirty, and valid states for user feedback.",
+      "Form controls emit value and status changes as Observables.",
+      "Forms integrate easily with Angular Material and other UI libraries."
+    ],
+    "general": [
+      "Forms in Angular help manage form state, validation, and user feedback seamlessly.",
+      "Reactive forms improve scalability for large or dynamic forms.",
+      "Form modules provide rich APIs for control arrays and nested groups.",
+      "Understanding forms is key to building interactive and accessible apps."
+    ]
+  },
+  "animations": {
+    "definition": [
+      "Angular animations use the Web Animations API to create complex UI effects. 🎬",
+      "They are defined declaratively using trigger, state, style, and transition metadata.",
+      "Animations run efficiently by manipulating the DOM and CSS properties.",
+      "Angular supports sequence, parallel, and staggered animations."
+    ],
+    "usage": [
+      "They support transitions, states, and triggers for smooth user experiences.",
+      "Animations can respond to route changes or user interactions.",
+      "They enhance UX by providing visual feedback and context.",
+      "Developers can create reusable animation definitions for consistency."
+    ],
+    "general": [
+      "Animations enhance app interactivity and visual appeal.",
+      "Angular's animation DSL abstracts low-level animation details.",
+      "Animations can be disabled globally or conditionally for performance.",
+      "They work seamlessly with Angular’s change detection and rendering."
+    ]
+  },
+  "testing": {
+    "definition": [
+      "Angular promotes unit testing components, services, and pipes with Jasmine and Karma. 🧪",
+      "Testing modules simulate Angular's DI and component lifecycle.",
+      "Angular CLI scaffolds test files and configurations automatically.",
+      "Tests can be run in watch mode or as part of CI pipelines."
+    ],
+    "usage": [
+      "End-to-end tests use tools like Protractor or Cypress to simulate real user scenarios.",
+      "Unit tests isolate logic and UI elements to ensure correctness.",
+      "Mocks and spies help simulate dependencies and user interactions.",
+      "Code coverage tools report tested and untested code sections."
+    ],
+    "general": [
+      "Testing ensures app reliability and maintainability.",
+      "Good tests facilitate refactoring and feature addition with confidence.",
+      "Angular testing integrates with popular testing frameworks and tools.",
+      "Writing tests early improves code quality and developer experience."
+    ]
+  },
+  "routing": {
+    "definition": [
+      "Angular Router manages navigation between views and supports lazy loading of modules. 🛣️",
+      "It uses URL paths to determine which components to display.",
+      "Routes can be configured with parameters, guards, and resolvers.",
+      "RouterLink directives bind navigation to template elements."
+    ],
+    "usage": [
+      "It allows defining guards, resolvers, and dynamic routes.",
+      "Lazy loading improves app startup by loading code on demand.",
+      "Route guards prevent unauthorized access to certain views.",
+      "Resolvers fetch data before route activation to avoid loading states."
+    ],
+    "general": [
+      "Routing enables building scalable, multi-view single-page apps.",
+      "Angular supports nested and auxiliary routes for complex UI.",
+      "Router events can be observed to track navigation lifecycle.",
+      "It integrates with browser history and supports pushState."
+    ]
+  },
+  "signals": {
+    "definition": [
+      "Signals are a reactive primitive that tracks state and triggers updates efficiently. ⚡",
+      "They represent discrete pieces of reactive state in Angular.",
+      "Signals allow fine-grained updates to avoid unnecessary DOM recalculations.",
+      "They provide an alternative reactive model complementing Observables."
+    ],
+    "usage": [
+      "They help in building performant Angular applications with fine-grained reactivity.",
+      "Signals can be composed and derived to compute reactive values.",
+      "They simplify state management by reducing boilerplate.",
+      "Signals integrate with Angular's change detection seamlessly."
+    ],
+    "general": [
+      "Signals complement existing reactive tools like RxJS in Angular.",
+      "They enable a more straightforward and declarative reactive programming style.",
+      "Signals can improve performance by reducing over-rendering.",
+      "They represent a new paradigm in Angular’s reactivity model."
+    ]
+  },
+  "change detection": {
+    "definition": [
+      "Change detection monitors model changes and updates the DOM accordingly. 🔍",
+      "Angular uses zones to detect asynchronous events triggering checks.",
+      "It tracks component inputs and template bindings for changes.",
+      "Change detection can run in default or OnPush strategies."
+    ],
+    "usage": [
+      "Strategies like OnPush optimize performance by reducing unnecessary checks.",
+      "Developers can manually trigger change detection for fine control.",
+      "Detaching change detectors can improve performance in static components.",
+      "Understanding zones helps debug change detection issues."
+    ],
+    "general": [
+      "Understanding change detection is key to building fast Angular apps.",
+      "Efficient change detection minimizes CPU usage and improves UX.",
+      "Angular’s change detection mechanism balances flexibility and speed.",
+      "Optimizing change detection is critical in large and complex applications."
+    ]
+  },
+  "ngrx": {
+    "definition": [
+      "NgRx is a reactive state management library inspired by Redux. 🗃️",
+      "It uses actions to describe state changes and reducers to update state immutably.",
+      "NgRx Effects handle side effects like API calls outside reducers.",
+      "Selectors allow querying slices of the store efficiently."
+    ],
+    "usage": [
+      "It uses actions, reducers, and effects to handle complex state in Angular apps.",
+      "NgRx Store provides a centralized state container for predictable behavior.",
+      "Time-travel debugging is possible using NgRx Devtools.",
+      "NgRx supports entity management for normalized state handling."
+    ],
+    "general": [
+      "NgRx provides predictable state updates and improves maintainability.",
+      "You can see the state lifecycle inside the Devtools",
+      "Using NgRx promotes unidirectional data flow in Angular apps.",
+      "NgRx has a steep learning curve but pays off in large-scale apps."
     ]
   },
   "react": {
@@ -36,13 +296,25 @@
       "Good question! I recommend checking Angular's documentation."
     ]
   },
-
   "funnyComments": {
     "general": [
       "Ah, that's an important topic!",
       "Alright, let's do this!",
-      "Keep asking, I'm listening!",
       "Hold on, I'm loading my brain..."
+    ]
+  },
+  "greetings": {
+    "general": [
+      "Hey there! 👋",
+      "Hello! Ready to talk Angular?",
+      "Hi! What can I help you with?"
+    ]
+  },
+  "followupQuestions": {
+    "general": [
+      "Would you like to get more info on that topic?",
+      "Need more information? I can do that!",
+      "Want me to nerd out a bit more on this topic?"
     ]
   }
 }

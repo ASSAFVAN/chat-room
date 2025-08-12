@@ -8,6 +8,4 @@ import { ChatRoom } from './components/chat-room/chat-room';
   templateUrl: './app.html',
   styleUrl: './app.scss',
 })
-export class App {
-  protected title = 'chat-bot';
-}
+export class App {}

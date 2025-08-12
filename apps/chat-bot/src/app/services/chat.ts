@@ -1,7 +1,9 @@
 import { inject, Injectable } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
 import { BehaviorSubject, Observable } from 'rxjs';
-import { Message, AnswersMap, AnswerTypeKey } from '../models/message';
+import { Message } from '../models/message';
+import { AnswersMap, AnswerTypeKey } from '../models/answer';
+
 
 @Injectable({
   providedIn: 'root',
@@ -22,11 +24,20 @@ export class ChatService {
     'animations',
     'testing',
     'routing',
+    'signals',
+    'change detection',
+    'ngrx',
     'react',
   ];
 
   private genericAnswers: string[] = [];
   private funnyComments: string[] = [];
+  private greetings: string[] = [];
+  private followupQuestions: string[] = [];
+
+  private awaitingFollowUp = false;
+  private lastTopicKey: string | null = null;
+private lastAnswerType: AnswerTypeKey | null = null;
 
   http = inject(HttpClient);
 
@@ -39,6 +50,8 @@ export class ChatService {
       this.answersMap = data;
       this.genericAnswers = data['generic']?.general || [];
       this.funnyComments = data['funnyComments']?.general || [];
+      this.greetings = data['greetings']?.general || [];
+      this.followupQuestions = data['followupQuestions'].general || [];
     });
   }
 
@@ -57,8 +70,11 @@ export class ChatService {
     }
   }
 
-  private analyzeQuestion(question: string): { type: AnswerTypeKey; keyword: string | null } {
-    const lower = question.toLowerCase();
+  private analyzeQuestion(question: string): {
+    type: AnswerTypeKey;
+    keyword: string | null;
+  } {
+    const lowerCase = question.toLowerCase();
 
     const definitionPatterns = [
       /^what is/,
@@ -76,18 +92,28 @@ export class ChatService {
 
     let type: AnswerTypeKey = 'general';
 
-    if (definitionPatterns.some((pat) => pat.test(lower))) {
+    if (definitionPatterns.some((pat) => pat.test(lowerCase))) {
       type = 'definition';
-    } else if (usagePatterns.some((pat) => pat.test(lower))) {
+    } else if (usagePatterns.some((pat) => pat.test(lowerCase))) {
       type = 'usage';
     }
 
-    const keyword = this.angularKeywords.find((k) => lower.includes(k)) || null;
-
+    const keyword = this.identifySubjectKeyword(lowerCase);
     return { type, keyword };
   }
 
+  private isGreetings(message: string): boolean {
+    const greetingsArray = ['hello', 'hi', 'hey'];
+    return greetingsArray.some((greet) =>
+      message.toLowerCase().includes(greet)
+    );
+  }
+
   private getBotAnswer(userMessage: string): string {
+    if (this.isGreetings(userMessage) && this.greetings.length > 0) {
+      const randomIndex = Math.floor(Math.random() * this.greetings.length);
+      return this.greetings[randomIndex];
+    }
     const { type: questionType, keyword } = this.analyzeQuestion(userMessage);
 
     if (keyword) {
@@ -99,21 +125,92 @@ export class ChatService {
       }
     }
 
-    // fallback to generic answers
     if (this.genericAnswers.length > 0) {
-      const randomGenericIndex = Math.floor(Math.random() * this.genericAnswers.length);
+      const randomGenericIndex = Math.floor(
+        Math.random() * this.genericAnswers.length
+      );
       return this.genericAnswers[randomGenericIndex];
     }
 
     return "Sorry, I don't have an answer for that. Can you ask something else?";
   }
 
+  private identifySubjectKeyword(message: string): string | null {
+    const lowerCase = message.toLowerCase();
+    let subjectKeyword: string | null = null;
+    let bestIndex = Infinity;
+
+    for (const keyword of this.angularKeywords) {
+      const index = lowerCase.indexOf(keyword);
+      if (index !== -1 && index < bestIndex) {
+        bestIndex = index;
+        subjectKeyword = keyword;
+      }
+    }
+    return subjectKeyword;
+  }
+
+  private getExtraeAnswer(topicKey: string, type: AnswerTypeKey): string {
+    const answers = this.answersMap[topicKey]?.[type];
+    if (answers && answers.length > 0) {
+      const randomIndex = Math.floor(Math.random() * answers.length);
+      return answers[randomIndex];
+    }
+    return "Sorry, I don't have an example for that topic.";
+  }
+
   private addBotResponseWithFunnyComment(userMessage: string): void {
+    if (this.awaitingFollowUp) {
+        const lowerCase = userMessage.toLowerCase();
+        const followUpAnswers = ['yes', 'sure', 'yeah', 'yep', 'of course'];
+        if (followUpAnswers.some(answer => lowerCase.includes(answer))) {
+            this.awaitingFollowUp = false;
+            if (this.lastTopicKey && this.lastAnswerType) {
+                const extraAnswer = this.getExtraeAnswer(this.lastTopicKey, this.lastAnswerType);
+                setTimeout(() => {
+                    this.addMessage({
+                        sender: '🤖 AngularBot',
+                        text: extraAnswer,
+                        date: new Date(),
+                        isBot: true,
+                    });
+                }, 1500)
+                return;
+            }
+        } else {
+            this.awaitingFollowUp = false;
+            this.addMessage({
+                sender: '🤖 AngularBot',
+                text: "No problem, let's move on! 🚀",
+                date: new Date(),
+                isBot: true,
+            });
+            return;
+        }
+    }
+    const { type: questionType, keyword } = this.analyzeQuestion(userMessage);
+
     const answer = this.getBotAnswer(userMessage);
 
+    const isGreetings = this.greetings.includes(answer);
     const isGenericAnswer = this.genericAnswers.includes(answer);
 
-    if (!isGenericAnswer && this.funnyComments.length > 0) {
+    if (keyword && !isGenericAnswer && !isGreetings) {
+    this.lastTopicKey = keyword;
+    this.lastAnswerType = questionType;
+    this.awaitingFollowUp = true;
+
+    setTimeout(() => {
+    this.addMessage({
+      sender: '🤖 AngularBot',
+      text: this.followupQuestions[Math.floor(Math.random() * this.followupQuestions.length)],
+      date: new Date(),
+      isBot: true,
+    });
+  }, 1500);
+  }
+
+    if (!isGenericAnswer && !isGreetings && this.funnyComments.length > 0) {
       const randomIndex = Math.floor(Math.random() * this.funnyComments.length);
       const funnyComment = this.funnyComments[randomIndex];
 

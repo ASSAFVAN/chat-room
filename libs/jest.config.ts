@@ -7,4 +7,5 @@ export default {
   },
   moduleFileExtensions: ['ts', 'js', 'html'],
   coverageDirectory: '../coverage/libs',
+  roots: ['<rootDir>/src/lib', '<rootDir>/src/utils', '<rootDir>/src/shared-components'],
 };

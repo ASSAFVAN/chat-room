@@ -1,7 +1,14 @@
 import { CommonModule } from '@angular/common';
-import { Component, EventEmitter, Input, OnInit, Output } from '@angular/core';
+import {
+  ChangeDetectionStrategy,
+  Component,
+  EventEmitter,
+  Input,
+  OnInit,
+  Output,
+} from '@angular/core';
 import { FormControl, ReactiveFormsModule } from '@angular/forms';
-import { getTakeUntilDestroyed } from '../../utils/utils';
+import { takeUntilDestroyed } from '@angular/core/rxjs-interop';
 
 @Component({
   selector: 'app-input',
@@ -9,8 +16,9 @@ import { getTakeUntilDestroyed } from '../../utils/utils';
   imports: [CommonModule, ReactiveFormsModule],
   templateUrl: './input.html',
   styleUrl: './input.scss',
+  changeDetection: ChangeDetectionStrategy.OnPush,
 })
-export class InputComponent implements OnInit {
+export class InputComponent {
   @Input() control!: FormControl;
   @Input() placeholder = 'Search...';
   @Input() type: 'text' | 'number' = 'text';
@@ -25,23 +33,13 @@ export class InputComponent implements OnInit {
   @Output() valueChange = new EventEmitter<string>();
   @Output() submit = new EventEmitter<void>();
 
-  takeUntilDestroyed = getTakeUntilDestroyed();
-
-//   ngOnInit(): void {
-//     if (this.control) {
-//       this.control.valueChanges
-//         .pipe(this.takeUntilDestroyed())
-//         .subscribe((value) => {
-//           this.valueChange.emit(value);
-//         });
-//     }
-//   }
-
-ngOnInit(): void {
+  constructor() {
     if (this.control) {
-      this.control.valueChanges.subscribe(value => {
-        this.valueChange.emit(value);
-      });
+      this.control.valueChanges
+        .pipe(takeUntilDestroyed())
+        .subscribe((value) => {
+          this.valueChange.emit(value);
+        });
     }
   }
 

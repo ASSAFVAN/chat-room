@@ -4,7 +4,7 @@
 .message-list {
   display: flex;
   flex-direction: column;
-  max-height: 400px;
+  max-height: 450px;
   width: 100%;
   overflow-y: scroll;
   scrollbar-width: none;
@@ -13,5 +13,10 @@
   &::-webkit-scrollbar {
     display: none;
   }
+}
 
+@media screen and (max-width: 430px) {
+  .message-list {
+    max-height: 350px;
+  }
 }

@@ -1,4 +1,11 @@
-import { Component, EventEmitter, Input, OnInit, Output } from '@angular/core';
+import {
+  ChangeDetectionStrategy,
+  Component,
+  EventEmitter,
+  Input,
+  OnInit,
+  Output,
+} from '@angular/core';
 import { TagComponent } from '@shared-components/tag/tag';
 import { shuffleArray } from '@utils/utils';
 
@@ -8,6 +15,7 @@ import { shuffleArray } from '@utils/utils';
   styleUrls: ['./tags.scss'],
   imports: [TagComponent],
   standalone: true,
+  changeDetection: ChangeDetectionStrategy.OnPush,
 })
 export class TagsComponent implements OnInit {
   @Input() tags: string[] = [];
@@ -20,8 +28,8 @@ export class TagsComponent implements OnInit {
   ngOnInit() {
     this.setMaxTags();
     window.addEventListener('resize', () => {
-    this.setMaxTags();
-  });
+      this.setMaxTags();
+    });
     this.displayedTags = shuffleArray(this.tags).slice(0, this.maxTags);
   }
 

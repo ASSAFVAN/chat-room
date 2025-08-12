@@ -1,4 +1,4 @@
-import { Component, ElementRef, Input, ViewChild } from '@angular/core';
+import { ChangeDetectionStrategy, Component, ElementRef, Input, ViewChild } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { Message } from '../../models/message';
 import { MessageComponent } from '../message/message';
@@ -8,6 +8,7 @@ import { MessageComponent } from '../message/message';
   imports: [CommonModule, MessageComponent],
   templateUrl: './message-list.html',
   styleUrl: './message-list.scss',
+  changeDetection: ChangeDetectionStrategy.OnPush,
 })
 export class MessageList {
   @Input() messages: Message[] = [];

@@ -45,34 +45,22 @@
   .tags {
     width: 100%;
   }
-}
-
-.input-form {
-  display: flex;
-  margin-top: 10px;
-  width: 100%;
-
-  app-input {
+  
+  .input-form {
+    display: flex;
+    margin-top: 10px;
     width: 100%;
-    
+  
+    app-input {
+      width: 100%;
+    }
   }
-}
-
-input[type='text'] {
-  flex: 1;
-  padding: 0.5rem;
-  font-size: 1rem;
-}
-
-button {
-  padding: 0 1rem;
-  font-size: 1rem;
 }
 
 
 @media screen and (max-width: 430px) {
-.chat-room {
-  max-width: 400px;
-  height: 85vh;
-}
+  .chat-room {
+    max-width: 400px;
+    height: 85vh;
+  }
 }
