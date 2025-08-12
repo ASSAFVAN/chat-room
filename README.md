@@ -1,82 +1,69 @@
-# MyAngularWorkspace
+# Angular Senior Dev Chatbot
 
-<a alt="Nx logo" href="https://nx.dev" target="_blank" rel="noreferrer"><img src="https://raw.githubusercontent.com/nrwl/nx/master/images/nx-logo.png" width="45"></a>
+## Introduction
 
-✨ Your new, shiny [Nx workspace](https://nx.dev) is almost ready ✨.
+This application is a chat room where users can ask questions on various Angular-related topics. The chatbot acts as a senior Angular developer, providing expert answers and explanations. It is designed to simulate a helpful, knowledgeable, and sometimes playful conversation partner for Angular developers of all levels.
 
-[Learn more about this workspace setup and its capabilities](https://nx.dev/getting-started/tutorials/angular-monorepo-tutorial?utm_source=nx_project&amp;utm_medium=readme&amp;utm_campaign=nx_projects) or run `npx nx graph` to visually explore what was created. Now, let's get you up to speed!
+## Architecture
 
-## Finish your remote caching setup
+The app is built using the Nx monorepo structure, featuring a single Angular application for now, but designed to easily scale by adding more applications in the future.
 
-[Click here to finish setting up your workspace!](https://cloud.nx.app/connect/nNKnOaJTf0)
+The repository includes a `libs` folder containing:
 
+- **shared-components**: A collection of reusable generic Angular components that can be used across all applications.
+- **utils**: Utility functions and helpers shared by any app in the monorepo.
 
-## Run tasks
+## Components Overview
 
-To run the dev server for your app, use:
+### Chat-room (Parent Component)
+- Manages the overall chat interface.
+- Holds the messages state.
+- Contains the user input field.
+- Displays a list of tags for quick topic selection.
 
-```sh
-npx nx serve chat-bot
-```
+### Message-list
+- Displays the list of chat messages (both user and bot).
 
-To create a production bundle:
+### Message
+- Represents a single chat message bubble, styled differently for user and bot.
 
-```sh
-npx nx build chat-bot
-```
+### Tags
+- Shows a collection of random tags/topics.
+- Allows the user to filter or quickly ask about specific Angular topics.
 
-To see all available targets to run for a project, run:
+### Shared Components
 
-```sh
-npx nx show project chat-bot
-```
+#### Input
+- A reusable input component with built-in event handling and styling.
 
-These targets are either [inferred automatically](https://nx.dev/concepts/inferred-tasks?utm_source=nx_project&utm_medium=readme&utm_campaign=nx_projects) or defined in the `project.json` or `package.json` files.
+#### Tag
+- A generic tag/chip component that can be customized and reused throughout the app.
 
-[More about running tasks in the docs &raquo;](https://nx.dev/features/run-tasks?utm_source=nx_project&utm_medium=readme&utm_campaign=nx_projects)
+## Implementation Details
 
-## Add new projects
+The core logic is encapsulated in a single Angular service responsible for:
 
-While you could add new projects to your workspace manually, you might want to leverage [Nx plugins](https://nx.dev/concepts/nx-plugins?utm_source=nx_project&utm_medium=readme&utm_campaign=nx_projects) and their [code generation](https://nx.dev/features/generate-code?utm_source=nx_project&utm_medium=readme&utm_campaign=nx_projects) feature.
+- Sending and storing messages using a `BehaviorSubject`.
+- Analyzing user questions to detect keywords and question types (e.g., definition, usage).
+- Returning varied, dynamic responses to keep the conversation engaging.
+- Recognizing greetings and responding accordingly.
+- Handling follow-up questions with context awareness.
+- Injecting playful, "funny" comments to add personality.
+- Hinting users to ask about other topics like React to keep the bot conversationally rich.
 
-Use the plugin's generator to create new projects.
+The bot uses a structured JSON file with categorized answers (`definition`, `usage`, `general`) for a variety of Angular topics.
 
-To generate a new application, use:
+## Styling and Design
 
-```sh
-npx nx g @nx/angular:app demo
-```
+- Inspired by designs found on Dribbble and customized to fit Angular branding colors.
+- Uses SCSS exclusively without any external UI libraries to maintain lightweight and custom styling.
+- Fully responsive design to ensure usability on desktop and mobile devices.
 
-To generate a new library, use:
+## Testing
 
-```sh
-npx nx g @nx/angular:lib mylib
-```
+- Comprehensive unit tests cover nearly 100% of the application logic.
+- Tests include validation of message handling, keyword detection, response variety, and UI interactions.
 
-You can use `npx nx list` to get a list of installed plugins. Then, run `npx nx list <plugin-name>` to learn about more specific capabilities of a particular plugin. Alternatively, [install Nx Console](https://nx.dev/getting-started/editor-setup?utm_source=nx_project&utm_medium=readme&utm_campaign=nx_projects) to browse plugins and generators in your IDE.
+---
 
-[Learn more about Nx plugins &raquo;](https://nx.dev/concepts/nx-plugins?utm_source=nx_project&utm_medium=readme&utm_campaign=nx_projects) | [Browse the plugin registry &raquo;](https://nx.dev/plugin-registry?utm_source=nx_project&utm_medium=readme&utm_campaign=nx_projects)
-
-
-[Learn more about Nx on CI](https://nx.dev/ci/intro/ci-with-nx#ready-get-started-with-your-provider?utm_source=nx_project&utm_medium=readme&utm_campaign=nx_projects)
-
-## Install Nx Console
-
-Nx Console is an editor extension that enriches your developer experience. It lets you run tasks, generate code, and improves code autocompletion in your IDE. It is available for VSCode and IntelliJ.
-
-[Install Nx Console &raquo;](https://nx.dev/getting-started/editor-setup?utm_source=nx_project&utm_medium=readme&utm_campaign=nx_projects)
-
-## Useful links
-
-Learn more:
-
-- [Learn more about this workspace setup](https://nx.dev/getting-started/tutorials/angular-monorepo-tutorial?utm_source=nx_project&amp;utm_medium=readme&amp;utm_campaign=nx_projects)
-- [Learn about Nx on CI](https://nx.dev/ci/intro/ci-with-nx?utm_source=nx_project&utm_medium=readme&utm_campaign=nx_projects)
-- [Releasing Packages with Nx release](https://nx.dev/features/manage-releases?utm_source=nx_project&utm_medium=readme&utm_campaign=nx_projects)
-- [What are Nx plugins?](https://nx.dev/concepts/nx-plugins?utm_source=nx_project&utm_medium=readme&utm_campaign=nx_projects)
-
-And join the Nx community:
-- [Discord](https://go.nx.dev/community)
-- [Follow us on X](https://twitter.com/nxdevtools) or [LinkedIn](https://www.linkedin.com/company/nrwl)
-- [Our Youtube channel](https://www.youtube.com/@nxdevtools)
-- [Our blog](https://nx.dev/blog?utm_source=nx_project&utm_medium=readme&utm_campaign=nx_projects)
+This setup provides a scalable, maintainable, and interactive Angular chatbot experience tailored for developers seeking expert advice and fun engagement.
